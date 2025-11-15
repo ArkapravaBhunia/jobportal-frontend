@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h1 {
+            color: #667eea;
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Landing Page */
+        .landing {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .landing h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .landing p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .action-card {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 250px;
+        }
+
+        .action-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .action-card h3 {
+            color: #667eea;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .action-card p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        /* Form Section */
+        .form-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        .form-section h2 {
+            color: #667eea;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn {
+            background: #667eea;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .back-btn {
+            background: #6c757d;
+            margin-bottom: 1rem;
+        }
+
+        .back-btn:hover {
+            background: #5a6268;
+        }
+
+        /* Jobs List */
+        .jobs-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .jobs-section h2 {
+            color: #667eea;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .job-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s;
+        }
+
+        .job-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .job-card h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .job-card p {
+            color: #666;
+            margin: 0.3rem 0;
+        }
+
+        .job-meta {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .job-meta span {
+            background: #667eea;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .loading {
+            text-align: center;
+            color: #667eea;
+            font-size: 1.2rem;
+            padding: 2rem;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .landing h2 {
+                font-size: 2rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <h1>Job Portal</h1>
+        <div class="nav-links">
+            <a href="#" onclick="showPage('landing')">Home</a>
+            <a href="#" onclick="showRegistration()">Register</a>
+            <a href="#" onclick="showLogin()">Login</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Landing Page -->
+        <div id="landing-page" class="landing">
+            <h2>Welcome to Job Portal</h2>
+            <p>Find your dream job or post new opportunities</p>
+            <div class="action-buttons">
+                <div class="action-card" onclick="showPage('add-job')">
+                    <h3>➕ Add Job</h3>
+                    <p>Post a new job opportunity</p>
+                </div>
+                <div class="action-card" onclick="showPage('all-jobs'); loadJobs()">
+                    <h3>📋 View All Jobs</h3>
+                    <p>Browse available positions</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Job Form -->
+        <div id="add-job-page" class="form-section hidden">
+            <button class="btn back-btn" onclick="showPage('landing')">← Back to Home</button>
+            <h2>Post a New Job</h2>
+            <div id="add-job-message"></div>
+            <form id="add-job-form">
+                <div class="form-group">
+                    <label for="job-title">Job Title *</label>
+                    <input type="text" id="job-title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="company">Company *</label>
+                    <input type="text" id="company" name="company" required>
+                </div>
+                <div class="form-group">
+                    <label for="location">Location *</label>
+                    <input type="text" id="location" name="location" required>
+                </div>
+                <div class="form-group">
+                    <label for="job-type">Job Type *</label>
+                    <select id="job-type" name="jobType" required>
+                        <option value="">Select Type</option>
+                        <option value="Full-time">Full-time</option>
+                        <option value="Part-time">Part-time</option>
+                        <option value="Contract">Contract</option>
+                        <option value="Internship">Internship</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="salary">Salary</label>
+                    <input type="text" id="salary" name="salary" placeholder="e.g., $50,000 - $70,000">
+                </div>
+                <div class="form-group">
+                    <label for="description">Job Description *</label>
+                    <textarea id="description" name="description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="requirements">Requirements</label>
+                    <textarea id="requirements" name="requirements"></textarea>
+                </div>
+                <button type="submit" class="btn">Post Job</button>
+            </form>
+        </div>
+
+        <!-- All Jobs Page -->
+        <div id="all-jobs-page" class="jobs-section hidden">
+            <button class="btn back-btn" onclick="showPage('landing')">← Back to Home</button>
+            <h2>All Available Jobs</h2>
+            <div id="jobs-message"></div>
+            <div id="jobs-container">
+                <div class="loading">Loading jobs...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration - Update this with your API base URL
+        const API_BASE_URL = 'http://localhost:8080/api'; // Change this to your backend URL
+
+        // Page Navigation
+        function showPage(pageName) {
+            document.getElementById('landing-page').classList.add('hidden');
+            document.getElementById('add-job-page').classList.add('hidden');
+            document.getElementById('all-jobs-page').classList.add('hidden');
+            
+            document.getElementById(pageName + '-page').classList.remove('hidden');
+        }
+
+        function showRegistration() {
+            alert('Registration page - Implement your registration REST API endpoint');
+            // Add your registration logic here
+        }
+
+        function showLogin() {
+            alert('Login page - Implement your login REST API endpoint');
+            // Add your login logic here
+        }
+
+        // Add Job Form Submission
+        document.getElementById('add-job-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const jobData = Object.fromEntries(formData.entries());
+            
+            const messageDiv = document.getElementById('add-job-message');
+            messageDiv.innerHTML = '<div class="loading">Posting job...</div>';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/jobs`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(jobData)
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    messageDiv.innerHTML = '<div class="success">Job posted successfully!</div>';
+                    e.target.reset();
+                    setTimeout(() => {
+                        messageDiv.innerHTML = '';
+                    }, 3000);
+                } else {
+                    throw new Error('Failed to post job');
+                }
+            } catch (error) {
+                messageDiv.innerHTML = '<div class="error">Error posting job. Please check if your backend server is running.</div>';
+                console.error('Error:', error);
+            }
+        });
+
+        // Load All Jobs
+        async function loadJobs() {
+            const container = document.getElementById('jobs-container');
+            const messageDiv = document.getElementById('jobs-message');
+            
+            container.innerHTML = '<div class="loading">Loading jobs...</div>';
+            messageDiv.innerHTML = '';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/jobs`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch jobs');
+                }
+                
+                const jobs = await response.json();
+                
+                if (jobs.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; color: #666;">No jobs available at the moment.</p>';
+                    return;
+                }
+                
+                container.innerHTML = jobs.map(job => `
+                    <div class="job-card">
+                        <h3>${job.title}</h3>
+                        <p><strong>Company:</strong> ${job.company}</p>
+                        <p><strong>Location:</strong> ${job.location}</p>
+                        <p><strong>Description:</strong> ${job.description}</p>
+                        ${job.requirements ? `<p><strong>Requirements:</strong> ${job.requirements}</p>` : ''}
+                        <div class="job-meta">
+                            <span>${job.jobType}</span>
+                            ${job.salary ? `<span>${job.salary}</span>` : ''}
+                        </div>
+                    </div>
+                `).join('');
+                
+            } catch (error) {
+                container.innerHTML = '';
+                messageDiv.innerHTML = '<div class="error">Error loading jobs. Please check if your backend server is running at ' + API_BASE_URL + '</div>';
+                console.error('Error:', error);
+            }
+        }
+    </script>
+</body>
+</html>
